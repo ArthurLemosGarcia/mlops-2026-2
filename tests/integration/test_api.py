@@ -10,7 +10,10 @@ CORPO = {"nome": "Ana", "text": "não entendi nada"}
 def test_raiz_responde_ok(client):
     resposta = client.get("/")
     assert resposta.status_code == 200
-    assert resposta.json() == {"status": "ok"}
+    corpo = resposta.json()
+    assert corpo["status"] == "ok"
+    # a rota agora devolve tambem a versao lida de APP_VERSION
+    assert "version" in corpo
 
 
 def test_post_predictions_devolve_predicao_de_cada_modelo_e_mensagem(client):
